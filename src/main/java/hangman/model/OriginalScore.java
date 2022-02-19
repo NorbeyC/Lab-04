@@ -13,12 +13,9 @@ public class OriginalScore implements GameScore {
  * @pre  Se inicia con 100 puntos, no se bonifican letras correctas tambien se pnealiza
  * cada letra incorrecta con 10 puntos y el puntaje minimo es 0.
  * 
- * @pos si inconrrectCount>0   entonces retorne puntaje=(100 - inconrrectCount*10)
- * @pos si inconrrectCount==0 && correctCount==0  entonces retorne puntaje= 500 
- * @pos si inconrrectCount==0 && correctCount>0  entonces retorne puntaje= 500 
- * @pos si correctCount=0 && inconrrectCount=0 entonces retorne puntaje = 0.
- * @pos si inconrrectCount < 0 || correctCount < 0 return error
- * @pos si inconrrectCount > 10 thrwon EXception
+ * @pos si inconrrectCount>=0 && incorrectCount<=10 && correctCount>=0 entonces retorne puntaje=(100 - inconrrectCount*10)
+ * @pos si inconrrectCount < 0 || correctCount < 0 return error(-1)
+ * @pos si inconrrectCount > 10 return 0
  * 
  * @param coorectCount, incorrectCount
  * 
@@ -26,8 +23,17 @@ public class OriginalScore implements GameScore {
  */
 	
 	@Override
-	public int calculateScore(int correctCount, int inconrrectCount) {
-		// TODO Auto-generated method stub
+	public int calculateScore(int correctCount, int incorrectCount) {
+		if(incorrectCount>=0 && incorrectCount<=10 && correctCount>=0) {
+			return 100 - incorrectCount*10;
+		}
+		if(incorrectCount<0 || correctCount<0) {
+			return -1;
+		}
+		if(incorrectCount > 10) {
+			return 0;
+		}
+		
 		return 0;
 	}
 
